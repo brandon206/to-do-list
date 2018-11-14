@@ -2,10 +2,11 @@ import 'materialize-css/dist/css/materialize.min.css';
 import 'materialize-css/dist/js/materialize';
 import '../assets/css/app.css';
 import React, {Component} from 'react';
+import {Route} from 'react-router-dom';
 import axios from 'axios';
 import List from './list';
 import AddItem from './add_item';
-import { randomString } from '../helpers'; 
+
 //when your file is called 'index' you don't need to specify anything
 
 const BASE_URL = 'http://api.reactprototypes.com/todos';
@@ -22,9 +23,7 @@ class App extends Component{
         }
     }
 
-    deleteItem = async (id) => {
-        console.log('Delete item with ID', id);
-        
+    deleteItem = async (id) => {        
         // http://api.reactprototypes.com/todos/5be4a7b6d2af63260da32ac2?key=brandoniscoding
         await axios.delete(`${BASE_URL}/${id + API_KEY}`);
         this.getListData();
@@ -75,18 +74,18 @@ class App extends Component{
     }
 
     render () {
-        const {error} = this.state;
+        const {error, list} = this.state;
 
         return(
             <div className = "container">
-                <h1 className = "center">To Do List</h1>
-                <AddItem add = {this.addItem}/>
 
-                {
-                    error 
-                        ? <h1 className = 'center red-text'>{error}</h1> 
-                        : <List delete = {this.deleteItem} data = {this.state.list}/>
-                }
+                <Route exact path = '/' render = {() => {
+                    return <List delete = {this.deleteItem} data = {list} error = {error}/>
+                }}/>
+
+                <Route path ='/add-item' render = {() => {
+                    return <AddItem add = {this.addItem}/>
+                }}/>
 
             </div>
         );

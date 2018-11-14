@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-// import Fragment from 'react';
+import {Link} from 'react-router-dom';
 
 class AddItem extends Component{
     state = {
@@ -20,7 +20,15 @@ class AddItem extends Component{
 
     render () {
         return(
-                <form onSubmit = {this.handleSubmit}>
+                <div>
+                    <h1 className = "center">Add To Do Item</h1>
+
+                    <div className="row">
+                        <div className="col s12 right-align">
+                            <Link to = '/' className = "btn blue lighten-2">Back to List</Link>
+                        </div>
+                    </div>
+                    <form onSubmit = {this.handleSubmit}>
                     <div className="row">
                         <div className="input-field col s8 offset-s2">
                             <input 
@@ -46,7 +54,8 @@ class AddItem extends Component{
                             <button className = 'btn blue lighten-2'>Add Item</button>
                         </div>
                     </div>
-                </form>
+                    </form>
+                </div>
         );
     } 
 }
