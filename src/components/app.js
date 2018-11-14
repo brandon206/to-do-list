@@ -6,12 +6,10 @@ import {Route} from 'react-router-dom';
 import axios from 'axios';
 import List from './list';
 import AddItem from './add_item';
+import ItemView from './item_view';
+import { BASE_URL, API_KEY } from '../helpers/common';
 
 //when your file is called 'index' you don't need to specify anything
-
-const BASE_URL = 'http://api.reactprototypes.com/todos';
-const API_KEY = '?key=brandoniscoding';
-
 
 class App extends Component{
     constructor (props){
@@ -79,13 +77,15 @@ class App extends Component{
         return(
             <div className = "container">
 
-                <Route exact path = '/' render = {() => {
-                    return <List delete = {this.deleteItem} data = {list} error = {error}/>
+                <Route exact path = '/' render = {(routingProps) => {
+                    return <List delete = {this.deleteItem} data = {list} error = {error} {...routingProps}/>
                 }}/>
 
-                <Route path ='/add-item' render = {() => {
-                    return <AddItem add = {this.addItem}/>
+                <Route path ='/add-item' render = {(routingProps) => {
+                    return <AddItem add = {this.addItem} {...routingProps}/>
                 }}/>
+
+                <Route path = '/item/:item_id' component = {ItemView}/>
 
             </div>
         );
